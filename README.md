@@ -27,4 +27,6 @@ Plus Python > Excel. This script simply gives you your daily, monthly, and total
    ```sh
    python3 main.py
    ```
-
+   
+### Screenshot
+ ![](https://i.imgur.com/a9c35zE.png)
