@@ -5,12 +5,15 @@ file = open("pnl_history.csv", 'r')
 dailyPnl = 0
 dailyWins = 0
 dailyLoss = 0
+dailyTotal = 0
 monthlyPnl = 0
 monthlyWins = 0
 monthlyLoss = 0
+monthlyTotal = 0
 totalPnl = 0
 totalWins = 0
 totalLoss = 0
+totalTrades = 0
 quoteSkip = 0
 
 
@@ -28,7 +31,7 @@ while(i < len(lines)-1):
     currentDate = dt.today() 
     i += 5 # jump to the next set 
 
-    if(pnlLine in '&lt;' or pnlLine == '- &lt; 0.01USDT≈ 0.01USD","'): # weird edge case
+    if('&lt;' in pnlLine): # weird edge case
         totalPnl += 0.01
         dailyPnl += 0.01
         monthlyPnl += 0.01
@@ -58,21 +61,33 @@ while(i < len(lines)-1):
     else:
         totalLoss += 1
 
-print("Daily Statistics")
-print("Total Trades: {}".format(dailyWins + dailyLoss))
-print("Win/Loss Ratio: {}%".format(dailyWins  / (dailyWins + dailyLoss) * 100))
-print("Total PNL: {}".format(dailyPnl))
+dailyTotal = dailyWins + dailyLoss
+if(dailyTotal != 0):
+    print("Daily Statistics")
+    print("Total Trades: {}".format(dailyTotal))
+    print("Win/Loss Ratio: {}%".format((dailyWins  / dailyTotal) * 100))
+    print("Total PNL: {}".format(dailyPnl))
+else:
+    print("No trades today")
 print()
 
-print("Monthly Statistics")
-print("Total Trades: {}".format(monthlyWins + monthlyLoss))
-print("Win/Loss Ratio: {}%".format(monthlyWins  / (monthlyWins + monthlyLoss) * 100))
-print("Total PNL: {}".format(monthlyPnl))
+monthlyTotal = monthlyWins + monthlyLoss
+if(monthlyTotal != 0):
+    print("Monthly Statistics")
+    print("Total Trades: {}".format(monthlyTotal))
+    print("Win/Loss Ratio: {}%".format((monthlyWins  / monthlyTotal) * 100))
+    print("Total PNL: {}".format(monthlyPnl))
+else:
+    print("No trades this month")
 print()
 
-print("Total Statistics")
-print("Total Trades: {}".format(totalWins + totalLoss))
-print("Win/Loss Ratio: {}%".format(totalWins  / (totalWins + totalLoss) * 100))
-print("Total PNL: {}".format(totalPnl))
+totalTrades = totalWins + totalLoss
+if(totalTrades != 0):
+    print("Total Statistics")
+    print("Total Trades: {}".format(totalTrades))
+    print("Win/Loss Ratio: {}%".format((totalWins  / totalTrades) * 100))
+    print("Total PNL: {}".format(totalPnl))
+else:
+    print("No trades to date")
 
 file.close()
